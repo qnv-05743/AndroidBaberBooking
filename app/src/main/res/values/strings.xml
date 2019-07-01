@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">BarberShop</string>
+    <string name="FACEBOOK_APP_ID">1081710622026555</string>
+    <string name="ACCOUNT_KIT_CLIENT_TOKEN">730b1609076ca2cb68716708012685ae</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
