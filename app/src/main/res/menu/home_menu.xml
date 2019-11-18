@@ -3,11 +3,11 @@
     <item
         android:id="@+id/action_home"
         android:icon="@drawable/ic_home_home_24dp"
-        android:title="Tela Principal"/>
+        android:title="Trang chính"/>
 
     <item
     android:id="@+id/action_shopping"
-    android:icon="@drawable/ic_shopping_cart_white_24dp"
-    android:title="Comprar"/>
+    android:icon="@drawable/ic_content_paste_black_24dp"
+    android:title="Dịch vụ"/>
 
 </menu>
