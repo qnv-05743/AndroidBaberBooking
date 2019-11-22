@@ -77,8 +77,9 @@ public class BookingStep3Fragment extends Fragment implements ITimeSlotLoadListe
 
     @Override
     public void onStart() {
-        super.onStart();
         EventBus.getDefault().register(this);
+        super.onStart();
+
     }
 
 
@@ -93,7 +94,7 @@ public class BookingStep3Fragment extends Fragment implements ITimeSlotLoadListe
     {
         if (event.isDisplay()){
             Calendar date = Calendar.getInstance();
-            date.add(Calendar.DATE, 0);
+            date.add(Calendar.DATE, 1);
             loadAvailableTimeSlotOfBarber(Common.currentBarber.getBarberId(),
                     simpleDateFormat.format(date.getTime()));
         }

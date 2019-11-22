@@ -329,23 +329,23 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getContext())
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Thông báo!")
-                        .setMessage("Bạn muốn kết thúc phiên đăng nhập không?")
-                        .setPositiveButton("Có", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                AccountKit.logOut();
-                                Intent intent = new Intent(getContext(), MainActivity.class);
-                                startActivity(intent);
-                            }
-
-
-                        })
-                        .setNegativeButton("Không", null)
-                        .show();
+                AccountKit.logOut();
+//                new AlertDialog.Builder(getContext())
+//                        .setIcon(android.R.drawable.ic_dialog_alert)
+//                        .setTitle("Thông báo!")
+//                        .setMessage("Bạn muốn kết thúc phiên đăng nhập không?")
+//                        .setPositiveButton("Có", new DialogInterface.OnClickListener()
+//                        {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                AccountKit.logOut();
+////                                Intent intent = new Intent(getContext(), MainActivity.class);
+////                                startActivity(intent);
+//                            }
+//
+//                        })
+//                        .setNegativeButton("Không", null)
+//                        .show();
             }
         });
         return view;

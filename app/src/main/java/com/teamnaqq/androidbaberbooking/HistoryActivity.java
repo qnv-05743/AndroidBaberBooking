@@ -86,7 +86,7 @@ public class HistoryActivity extends AppCompatActivity {
                     List<BookingInformation> bookingInformations = new ArrayList<>();
                     for (DocumentSnapshot userBookingSnapShot : task.getResult()) {
 
-                        BookingInformation bookingInformation = userBookingSnapShot.toObject((BookingInformation.class));
+                        BookingInformation bookingInformation = userBookingSnapShot.toObject(BookingInformation.class);
                         bookingInformations.add(bookingInformation);
                     }
 
@@ -103,9 +103,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void initView() {
         recycler_history.setHasFixedSize(true);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler_history.setLayoutManager(layoutManager);
 
         recycler_history.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
@@ -129,7 +128,7 @@ public class HistoryActivity extends AppCompatActivity {
             MyHistoryAdapter adapter = new MyHistoryAdapter(this, event.getBookingInformationList());
             recycler_history.setAdapter(adapter);
 
-            txt_history.setText(new StringBuilder("HISTORY (")
+            txt_history.setText(new StringBuilder("Lịch sử (")
                     .append(event.getBookingInformationList().size())
                     .append(")"));
 

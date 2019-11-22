@@ -90,7 +90,7 @@ boolean doubleBackToExitPressedOnce = false;
                                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                                     intent.putExtra(Common.IS_LOGIN, true);//esta diferente do video tempo 16:08
                                     startActivity(intent);
-                                    finish();
+                                    //finish();
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -100,7 +100,7 @@ boolean doubleBackToExitPressedOnce = false;
                         Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                         intent.putExtra(Common.IS_LOGIN, true);//esta diferente do video tempo 16:08
                         startActivity(intent);
-                        finish();
+                       // finish();
                     }
 
                 });

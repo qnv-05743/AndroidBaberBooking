@@ -39,13 +39,10 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         holder.txt_booking_baber_text.setText(bookingInformationList.get(position).getBarberName());
         holder.txt_booking_time_text.setText(bookingInformationList.get(position).getTime());
         holder.txt_salon_address.setText(bookingInformationList.get(position).getSalonAddress());
         holder.txt_salon_name.setText(bookingInformationList.get(position).getSalonName());
-
-
 
     }
 
@@ -73,7 +70,6 @@ public class MyHistoryAdapter extends RecyclerView.Adapter<MyHistoryAdapter.MyVi
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             unbinder= ButterKnife.bind(this.itemView);
         }
     }
