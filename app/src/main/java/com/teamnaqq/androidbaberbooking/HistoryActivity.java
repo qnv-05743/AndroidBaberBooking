@@ -107,7 +107,7 @@ public class HistoryActivity extends AppCompatActivity {
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler_history.setLayoutManager(layoutManager);
 
-        recycler_history.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+       // recycler_history.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
     }
 
     @Override
@@ -125,7 +125,7 @@ public class HistoryActivity extends AppCompatActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void displayData(UserBookingLoadEvent event) {
         if (event.isSuccess()) {
-            MyHistoryAdapter adapter = new MyHistoryAdapter(this, event.getBookingInformationList());
+            MyHistoryAdapter adapter = new MyHistoryAdapter(HistoryActivity.this, event.getBookingInformationList());
             recycler_history.setAdapter(adapter);
 
             txt_history.setText(new StringBuilder("Lịch sử (")

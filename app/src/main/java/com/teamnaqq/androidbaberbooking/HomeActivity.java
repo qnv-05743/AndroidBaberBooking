@@ -183,41 +183,46 @@ public class HomeActivity extends AppCompatActivity {
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//
+//                if (!dialog.isShowing())
+//                    dialog.show();
 
-                if (!dialog.isShowing())
-                    dialog.show();
-
-                final User user = new User(edt_name.getText().toString(),
-                        edt_address.getText().toString(),
+                String name = edt_name.getText().toString();
+                String add = edt_address.getText().toString();
+                final User user = new User(name,
+                        add,
                         phoneNumber);
-                userRef.document(phoneNumber)
-                        .set(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                bottomSheetDialog.dismiss();
-                                if (dialog.isShowing())
-                                    dialog.dismiss();
+                if (name.equals("") && add.equals("")){
+                    Toast.makeText(HomeActivity.this, "Vui lòng nhập đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
+                }else {
+                    userRef.document(phoneNumber)
+                            .set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    bottomSheetDialog.dismiss();
+                                    if (dialog.isShowing())
+                                        dialog.dismiss();
                                     Common.currentUser = user;
                                     bottomNavigationView.setSelectedItemId(R.id.action_home);
-
+                                    dialog.dismiss();
                                     Toast.makeText(HomeActivity.this, "Thanks You!", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                        if (dialog.isShowing())
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            dialog.isShowing();
                             dialog.dismiss();
+//                        bottomSheetDialog.dismiss();
+//                        Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
-                        bottomSheetDialog.dismiss();
-                        Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
 
             }
         });
-
+dialog.dismiss();
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.show();
 

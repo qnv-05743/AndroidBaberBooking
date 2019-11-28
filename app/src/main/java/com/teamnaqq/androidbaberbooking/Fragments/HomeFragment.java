@@ -51,6 +51,7 @@ import com.teamnaqq.androidbaberbooking.Interface.IBookingInforLoadListener;
 import com.teamnaqq.androidbaberbooking.Interface.IBookingInformationChangeListener;
 import com.teamnaqq.androidbaberbooking.Interface.ICountItemInCartListener;
 import com.teamnaqq.androidbaberbooking.Interface.ILookbookLoadListener;
+import com.teamnaqq.androidbaberbooking.Interface.IUserInformation;
 import com.teamnaqq.androidbaberbooking.MainActivity;
 import com.teamnaqq.androidbaberbooking.Model.Banner;
 import com.teamnaqq.androidbaberbooking.Model.BookingInformation;
@@ -231,7 +232,7 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
     ILookbookLoadListener iLookbookLoadListener;
     IBookingInforLoadListener iBookingInforLoadListener;
     IBookingInformationChangeListener iBookingInformationChangeListener;
-
+    IUserInformation IuserInformation;
     ListenerRegistration userBookingListener = null;
     EventListener<QuerySnapshot> userBookingEvent = null;
 
@@ -329,26 +330,52 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AccountKit.logOut();
-//                new AlertDialog.Builder(getContext())
-//                        .setIcon(android.R.drawable.ic_dialog_alert)
-//                        .setTitle("Thông báo!")
-//                        .setMessage("Bạn muốn kết thúc phiên đăng nhập không?")
-//                        .setPositiveButton("Có", new DialogInterface.OnClickListener()
-//                        {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                AccountKit.logOut();
-////                                Intent intent = new Intent(getContext(), MainActivity.class);
-////                                startActivity(intent);
-//                            }
-//
-//                        })
-//                        .setNegativeButton("Không", null)
-//                        .show();
+              deleteUser(true);
             }
         });
         return view;
+    }
+    private void deleteUser(boolean isChange) {
+        if (!TextUtils.isEmpty(Common.currentBookingId)) {
+
+            DocumentReference userBookingInfor = FirebaseFirestore.getInstance()
+                    .collection("User")
+                    .document(Common.currentUser.getPhoneNumber());
+
+
+
+            //delete
+            userBookingInfor.delete().addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Paper.init(getActivity());
+                    if (Paper.book().read(Common.EVENT_URI_CACHE) != null) {
+                        String eventString = Paper.book().read(Common.EVENT_URI_CACHE).toString();
+                        Uri eventUri = null;
+                        if (eventString != null && !TextUtils.isEmpty(eventString))
+                            eventUri = Uri.parse(eventString);
+                        if (eventUri != null)
+                            getActivity().getContentResolver().delete(eventUri, null, null);
+                    }
+
+                    Toast.makeText(getActivity(), "Success delete booking !", Toast.LENGTH_SHORT).show();
+
+                    loadUserBooking();
+
+                    if (isChange)
+                        IuserInformation.IuserInformation();
+                    dialog.dismiss();
+                }
+            });
+        } else {
+            dialog.dismiss();
+            Toast.makeText(getContext(), "Booking Information ID must not be empty", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initRealtimeUserBooking() {

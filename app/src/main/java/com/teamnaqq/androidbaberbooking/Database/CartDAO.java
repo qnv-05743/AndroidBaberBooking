@@ -9,6 +9,10 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
+
 @Dao
 public interface CartDAO {
     @Query("SELECT SUM(productPrice*productQuantity) from Cart where userPhone=:userPhone")
@@ -34,5 +38,4 @@ public interface CartDAO {
 
     @Query("DELETE FROM Cart WHERE userPhone=:userPhone")
     void clearCart(String userPhone);
-
 }
