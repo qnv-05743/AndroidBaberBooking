@@ -66,7 +66,7 @@ public class MyTimeSlotAdapter extends RecyclerView.Adapter<MyTimeSlotAdapter.My
                 int slot = Integer.parseInt(slotValue.getSlot().toString());
                 if (slot == position) {
 
-                    holder.cardTinmSlot.setEnabled(false);
+                    holder.cardTinmSlot.setEnabled(true);
                     holder.cardTinmSlot.setTag(Common.DISABLE_TAG);
                     holder.cardTinmSlot.setCardBackgroundColor(context.getResources().getColor(android.R.color.darker_gray));
                     holder.txtTimeSlotDescription.setText("Full");

@@ -26,11 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorButton"
         android:fontFamily="@font/bellerose"
         android:gravity="center"
         android:text="Skip"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="22sp" />
 
 </RelativeLayout>

@@ -192,9 +192,9 @@ public class HomeActivity extends AppCompatActivity {
                 final User user = new User(name,
                         add,
                         phoneNumber);
-                if (name.equals("") && add.equals("")){
+                if (name.equals("") || add.equals("")) {
                     Toast.makeText(HomeActivity.this, "Vui lòng nhập đầy đủ thông tin !", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     userRef.document(phoneNumber)
                             .set(user)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -222,9 +222,10 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-dialog.dismiss();
+        dialog.dismiss();
         bottomSheetDialog.setContentView(sheetView);
         bottomSheetDialog.show();
 
     }
+
 }

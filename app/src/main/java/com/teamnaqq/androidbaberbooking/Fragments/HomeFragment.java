@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -102,13 +103,21 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
     TextView txt_time;
     @BindView(R.id.txt_time_remain)
     TextView txt_time_remain;
+
     @BindView(R.id.imageView_logout)
-    ImageView imageView;
+    ImageView  imageView;
+
+    private void logoutUser() {
+        Intent myIntent = new Intent(getActivity(), MainActivity.class);
+        startActivity(myIntent);
+        //getActivity().getFragmentManager().popBackStack();
+    }
 
     @OnClick(R.id.card_view_histoy)
     void openHistoryActivity() {
         startActivity(new Intent(getActivity(), HistoryActivity.class));
     }
+
     @OnClick(R.id.btn_delete_booking)
     void deleteBooking() {
         deleteBookingFromBarber(false);
@@ -312,6 +321,26 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
         unbinder = ButterKnife.bind(this, view);
         cartDatabase = CartDatabase.getInstance(getContext());
 
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                        .setTitle(R.string.noti)
+                        .setMessage("Bạn có muốn thoát phiên đăng nhập không?")
+                        .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getContext(),MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                AccountKit.logOut();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .create()
+                        .show();
+            }
+        });
         //inicio
         Slider.init(new PicassoImageLoadingService());
         iBannerLoadListener = this;
@@ -327,55 +356,12 @@ public class HomeFragment extends Fragment implements ILookbookLoadListener, IBa
             loadUserBooking();
             countCartItem();
         }
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              deleteUser(true);
-            }
-        });
+
         return view;
     }
-    private void deleteUser(boolean isChange) {
-        if (!TextUtils.isEmpty(Common.currentBookingId)) {
 
-            DocumentReference userBookingInfor = FirebaseFirestore.getInstance()
-                    .collection("User")
-                    .document(Common.currentUser.getPhoneNumber());
+    private void deleteUser() {
 
-
-
-            //delete
-            userBookingInfor.delete().addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Paper.init(getActivity());
-                    if (Paper.book().read(Common.EVENT_URI_CACHE) != null) {
-                        String eventString = Paper.book().read(Common.EVENT_URI_CACHE).toString();
-                        Uri eventUri = null;
-                        if (eventString != null && !TextUtils.isEmpty(eventString))
-                            eventUri = Uri.parse(eventString);
-                        if (eventUri != null)
-                            getActivity().getContentResolver().delete(eventUri, null, null);
-                    }
-
-                    Toast.makeText(getActivity(), "Success delete booking !", Toast.LENGTH_SHORT).show();
-
-                    loadUserBooking();
-
-                    if (isChange)
-                        IuserInformation.IuserInformation();
-                    dialog.dismiss();
-                }
-            });
-        } else {
-            dialog.dismiss();
-            Toast.makeText(getContext(), "Booking Information ID must not be empty", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void initRealtimeUserBooking() {
