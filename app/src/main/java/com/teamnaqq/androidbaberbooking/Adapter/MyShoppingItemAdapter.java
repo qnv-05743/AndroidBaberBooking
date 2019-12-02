@@ -57,11 +57,12 @@ public class MyShoppingItemAdapter extends RecyclerView.Adapter<MyShoppingItemAd
                 cartItem.setProductImage(shoppingItemList.get(pos).getImage());
                 cartItem.setProductQuantity(1);
                 cartItem.setProductPrice(shoppingItemList.get(pos).getPrice());
-                cartItem.setUserPhone(Common.currentUser.getPhoneNumber());
-                //Insert to DB
+                    cartItem.setUserPhone(Common.currentUser.getPhoneNumber());
+                    //Insert to DB
 
-                DatabaseUtils.insertToCart(cartDatabase,cartItem);
-                Toast.makeText(context, "Added to Cart !", Toast.LENGTH_SHORT).show();
+                    DatabaseUtils.insertToCart(cartDatabase,cartItem);
+                    Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+
             }
         });
     }

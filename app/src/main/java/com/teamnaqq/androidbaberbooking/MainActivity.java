@@ -62,7 +62,7 @@ boolean doubleBackToExitPressedOnce = false;
     @OnClick(R.id.txt_skip)
     void loginUser() {
         Intent intent = new Intent(this, OverViewActivity.class);
-     //   intent.putExtra(com.teamnaqq.androidbaberbooking.Common.Common.IS_LOGIN, false);//esta diferente do video tempo 16:08
+     ///   intent.putExtra(com.teamnaqq.androidbaberbooking.Common.Common.IS_LOGIN, false);//esta diferente do video tempo 16:08
         startActivity(intent);
 
     }

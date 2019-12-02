@@ -101,10 +101,10 @@ public class OverViewActivity extends AppCompatActivity implements IShoppingData
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(OverViewActivity.this);
+        setContentView(R.layout.activity_over_view);
+        unbinder = ButterKnife.bind(OverViewActivity.this);
         iShoppingDataLoadListener = this;
         loadShoppingItem("Wax");
-        setContentView(R.layout.activity_over_view);
         initView();
     }
 
